@@ -287,8 +287,9 @@ func generateHTTPConfig(hostname, cluster string, status *envoytypev3.HttpStatus
 		Services: &extauthzhttp.ExtAuthz_HttpService{
 			HttpService: service,
 		},
-		FilterEnabledMetadata: generateFilterMatcher(wellknown.HTTPRoleBasedAccessControl),
-		WithRequestBody:       withBodyRequest(config.IncludeRequestBodyInCheck),
+		FilterEnabledMetadata:     generateFilterMatcher(wellknown.HTTPRoleBasedAccessControl),
+		MetadataContextNamespaces: []string{wellknown.HTTPRoleBasedAccessControl},
+		WithRequestBody:           withBodyRequest(config.IncludeRequestBodyInCheck),
 	}
 	if allowedHeaders != nil {
 		http.AllowedHeaders = allowedHeaders
@@ -318,9 +319,10 @@ func generateGRPCConfig(cluster string, config *meshconfig.MeshConfig_ExtensionP
 		Services: &extauthzhttp.ExtAuthz_GrpcService{
 			GrpcService: grpc,
 		},
-		FilterEnabledMetadata: generateFilterMatcher(wellknown.HTTPRoleBasedAccessControl),
-		TransportApiVersion:   core.ApiVersion_V3,
-		WithRequestBody:       withBodyRequest(config.IncludeRequestBodyInCheck),
+		FilterEnabledMetadata:     generateFilterMatcher(wellknown.HTTPRoleBasedAccessControl),
+		MetadataContextNamespaces: []string{wellknown.HTTPRoleBasedAccessControl},
+		TransportApiVersion:       core.ApiVersion_V3,
+		WithRequestBody:           withBodyRequest(config.IncludeRequestBodyInCheck),
 	}
 	tcp := &extauthztcp.ExtAuthz{
 		StatPrefix:            "tcp.",

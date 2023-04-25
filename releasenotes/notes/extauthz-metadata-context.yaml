@@ -1,0 +1,14 @@
+apiVersion: release-notes/v2
+kind: feature
+area: security
+issue:
+- 44524
+releaseNotes: |
+  Claim `envoy.filters.http.rbac` dynamic metadata namespace for the ext-authz check requests.
+
+  This will make the ID of the policy (RBAC 'to' rule) that triggered the CUSTOM action authorization
+  filter to be passed in the metadata context of the external authorization Check requests.
+  The data can be retrieved in Golang by navigating the following map of Envoy's `CheckRequest` object:
+  `AttributeContext.MetadataContext.FilterMetadata["envoy.filters.http.rbac"].Fields["istio_ext_authz_shadow_effective_policy_id"]`
+  The value is the ID of the policy in the following format:
+  `istio-ext-authz-ns[AuthorizationPolicy-ns]-policy[AuthorizationPolicy-name]-rule[Rule-Index]`.

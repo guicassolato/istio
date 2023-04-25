@@ -54,6 +54,8 @@ typedConfig:
       cluster: outbound|9000||my-custom-ext-authz.foo.svc.cluster.local
       timeout: 10s
       uri: http://my-custom-ext-authz.foo.svc.cluster.local
+  metadataContextNamespaces:
+  - envoy.filters.http.rbac
   statusOnError:
     code: Forbidden
   transportApiVersion: V3
